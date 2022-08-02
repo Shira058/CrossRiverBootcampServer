@@ -2,6 +2,7 @@
 using CoronaApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CoronaApp.Dal;
@@ -13,9 +14,11 @@ public class LocationRepository : ILocationRepository
         _LocationDal = LocationDal;
     }
 
-    public async Task<List<Location>> getAllLocation()
+    public async Task<List<LocationDTO>> getAllLocation()
     {
-        return await _LocationDal.getAllLocation();
+        var result = await _LocationDal.getAllLocation();
+        var locationDTOList = result.Select(l => new LocationDTO(l.Id,l.StartDate, l.EndDate,l.City,l.Address)).ToList();
+        return locationDTOList;
     }
 
     public async Task<List<Location>> getLocationsByPatientId(string id)
@@ -23,9 +26,11 @@ public class LocationRepository : ILocationRepository
         return await _LocationDal.getLocationsByPatientId(id);
     }
 
-    public async Task<List<Location>> getAllLocationByCity(string city)
+    public async Task<List<LocationDTO>> getAllLocationByCity(string city)
     {
-        return await _LocationDal.getAllLocationByCity(city);
+        var result = await _LocationDal.getAllLocationByCity(city);
+        var locationDTOList = result.Select(l => new LocationDTO(l.Id, l.StartDate, l.EndDate, l.City, l.Address)).ToList();
+        return locationDTOList;
     }
 
     public async Task<int> addNewLocation(Location newLocation)
@@ -33,14 +38,18 @@ public class LocationRepository : ILocationRepository
         return await _LocationDal.addNewLocation(newLocation);
     }
 
-    public async Task<List<Location>> getAllLocationBetweenDates(LocationSearch dates)
+    public async Task<List<LocationDTO>> getAllLocationBetweenDates(LocationSearch dates)
     {
-        return await _LocationDal.getAllLocationBetweenDates(dates);
+        var result = await _LocationDal.getAllLocationBetweenDates(dates);
+        var locationDTOList = result.Select(l => new LocationDTO(l.Id, l.StartDate, l.EndDate, l.City, l.Address)).ToList();
+        return locationDTOList;
     }
 
-    public async Task<List<Location>> getAllLocationByAge(LocationSearch age)
+    public async Task<List<LocationDTO>> getAllLocationByAge(LocationSearch age)
     { 
-       return await _LocationDal.getAllLocationByAge(age);
+       var result = await _LocationDal.getAllLocationByAge(age);
+        var locationDTOList = result.Select(l => new LocationDTO(l.Id, l.StartDate, l.EndDate, l.City, l.Address)).ToList();
+        return locationDTOList;
     }
 
 }

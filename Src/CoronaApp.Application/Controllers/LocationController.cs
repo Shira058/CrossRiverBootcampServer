@@ -25,7 +25,7 @@ public class LocationController : ControllerBase
 
     // GET:
     [HttpGet]
-    public async Task<ActionResult<List<Location>>> getAllLocation()
+    public async Task<ActionResult<List<LocationDTO>>> getAllLocation()
     {
         var result =  await _LocationRepository.getAllLocation();
         if (result == null)
@@ -61,7 +61,7 @@ public class LocationController : ControllerBase
 
     // GET:
     [HttpGet ("city")]
-    public async Task<ActionResult<List<Location>>> getAllLocationByCity([FromQuery] string city)
+    public async Task<ActionResult<List<LocationDTO>>> getAllLocationByCity([FromQuery] string city)
     {
         if (city == null)
         {
@@ -85,7 +85,7 @@ public class LocationController : ControllerBase
 
     // GET:
     [HttpPost("dates")]
-    public async Task<ActionResult<List<Location>>> getAllLocationBetweenDates([FromBody] LocationSearch dates)
+    public async Task<ActionResult<List<LocationDTO>>> getAllLocationBetweenDates([FromBody] LocationSearch dates)
     {
         if (dates == null)
         {
@@ -118,7 +118,7 @@ public class LocationController : ControllerBase
 
     // GET:
     [HttpPost("age")]
-    public async Task<ActionResult<List<Location>>> getAllLocationByAge([FromBody] LocationSearch age)
+    public async Task<ActionResult<List<LocationDTO>>> getAllLocationByAge([FromBody] LocationSearch age)
     {
         if (age == null || age.Age == null)
         {
