@@ -73,4 +73,29 @@ public class LocationDal : ILocationDal
         }
 
     }
+    public async Task<bool> deleteLocation(int id)
+    {
+        try
+        {
+            using (var _CoronaAppDBContext = new CoronaAppDBContext())
+            {
+               var locationToDeleted = await _CoronaAppDBContext.Locations.FindAsync(id);
+                if (locationToDeleted != null)
+                {
+                    _CoronaAppDBContext.Locations.Remove(locationToDeleted);
+                    await _CoronaAppDBContext.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception("internal error with SaveChangesAsync function");
+        }
+    }
+
 }

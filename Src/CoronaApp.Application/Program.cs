@@ -20,6 +20,15 @@ IConfigurationRoot configuration = new
             ConfigurationBuilder().AddJsonFile("appsettings.json",
             optional: false, reloadOnChange: true).Build();
 builder.Host.UseSerilog();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", p =>
+    {
+        p.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 //builder.Services.AddDbContext<CoronaAppDBContext>(item => item.UseSqlServer(builder.Configuration.GetConnectionString("home")));
 builder.Services.AddControllers();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
@@ -97,6 +106,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHandlerErrorsMiddleware();
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

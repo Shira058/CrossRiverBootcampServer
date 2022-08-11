@@ -11,5 +11,6 @@ public interface ILocationDal
      Task<List<Location>> getAllLocationByCity(string city);
     public Task<List<Location>> getAllLocationBetweenDates(LocationSearch dates);
     public Task<List<Location>> getAllLocationByAge(LocationSearch age);
+    public Task<bool> deleteLocation(int id);
 
 }

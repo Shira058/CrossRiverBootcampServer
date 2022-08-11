@@ -19,11 +19,11 @@ public class LocationRepository : ILocationRepository
     {
         return await _LocationDal.getAllLocation();
     }
-
-    public async Task<List<Location>> getLocationsByPatientId(ClaimsPrincipal User)
+    //ClaimsPrincipal User
+    public async Task<List<Location>> getLocationsByPatientId(string id)
     {
-        string id  = User.Claims.FirstOrDefault(
-                        x => x.Type.ToString().Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+       /* string id  = User.Claims.FirstOrDefault(
+                        x => x.Type.ToString().Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;*/
         return await _LocationDal.getLocationsByPatientId(id);
     }
 
@@ -47,4 +47,8 @@ public class LocationRepository : ILocationRepository
        return await _LocationDal.getAllLocationByAge(age);
     }
 
+    public async Task<bool> deleteLocation(int id)
+    {
+        return await _LocationDal.deleteLocation(id);
+    }
 }
